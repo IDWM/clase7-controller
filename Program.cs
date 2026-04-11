@@ -58,14 +58,16 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
-builder.Services.AddMiniProfiler(options =>
-{
-    options.RouteBasePath = "/profiler";
-    options.Storage = new MemoryCacheStorage(
-        new MemoryCache(new MemoryCacheOptions()),
-        TimeSpan.FromMinutes(60)
-    );
-});
+builder
+    .Services.AddMiniProfiler(options =>
+    {
+        options.RouteBasePath = "/profiler";
+        options.Storage = new MemoryCacheStorage(
+            new MemoryCache(new MemoryCacheOptions()),
+            TimeSpan.FromMinutes(60)
+        );
+    })
+    .AddEntityFramework();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
